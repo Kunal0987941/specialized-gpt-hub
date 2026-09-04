@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Specialized GPT Hub</title>
+
+<style>
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(0, 255, 170, .12),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(0, 150, 255, .12),
+            transparent 30%
+        ),
+
+        #050807;
+
+    overflow-x: hidden;
+
+    padding: 25px;
+}
+
+
+/* =========================================
+   ANIMATED BACKGROUND
+========================================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    width: 600px;
+
+    height: 600px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,255,170,.08),
+            transparent 65%
+        );
+
+    top: -250px;
+
+    left: -200px;
+
+    animation:
+        floatOne 8s ease-in-out infinite alternate;
+
+    pointer-events: none;
+}
+
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,120,255,.08),
+            transparent 65%
+        );
+
+    bottom: -200px;
+
+    right: -150px;
+
+    animation:
+        floatTwo 10s ease-in-out infinite alternate;
+
+    pointer-events: none;
+}
+
+
+@keyframes floatOne {
+
+    from {
+        transform: translate(0,0);
+    }
+
+    to {
+        transform: translate(100px,80px);
+    }
+
+}
+
+
+@keyframes floatTwo {
+
+    from {
+        transform: translate(0,0);
+    }
+
+    to {
+        transform: translate(-100px,-70px);
+    }
+
+}
+
+
+/* =========================================
+   APP
+========================================= */
+
+.app {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    background:
+        rgba(10,15,13,.82);
+
+    backdrop-filter:
+        blur(25px);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.55);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+
+    padding: 25px 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,255,170,.05),
+            transparent,
+            rgba(0,150,255,.05)
+        );
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.logo {
+
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 27px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00ff9d,
+            #008cff
+        );
+
+    box-shadow:
+        0 0 30px
+        rgba(0,255,170,.25);
+}
+
+
+.brand h1 {
+
+    font-size: 22px;
+
+    letter-spacing: .5px;
+}
+
+
+.brand p {
+
+    color: #89948f;
+
+    font-size: 13px;
+
+    margin-top: 4px;
+}
+
+
+.status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 14px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(0,255,170,.06);
+
+    border:
+        1px solid
+        rgba(0,255,170,.15);
+
+    color: #62ffbd;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.status-dot {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #00ff9d;
+
+    box-shadow:
+        0 0 12px #00ff9d;
+
+    animation:
+        blink 1.5s infinite;
+}
+
+
+@keyframes blink {
+
+    50% {
+        opacity: .3;
+    }
+
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.content {
+
+    padding: 30px;
+}
+
+
+.section-title {
+
+    margin-bottom: 18px;
+}
+
+
+.section-title h2 {
+
+    font-size: 18px;
+
+    margin-bottom: 5px;
+}
+
+
+.section-title p {
+
+    font-size: 12px;
+
+    color: #7d8882;
+}
+
+
+/* =========================================
+   GPT GRID
+========================================= */
+
+.gpt-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 14px;
+
+    margin-bottom: 25px;
+}
+
+
+.gpt-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 140px;
+
+    padding: 18px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    border-radius: 17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.025);
+
+    color: white;
+
+    transition:
+        .3s ease;
+}
+
+
+.gpt-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0,255,170,.08);
+
+    filter: blur(25px);
+
+    top: -70px;
+
+    right: -60px;
+
+    opacity: 0;
+
+    transition: .3s;
+}
+
+
+.gpt-card:hover {
+
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(0,255,170,.35);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.3);
+}
+
+
+.gpt-card:hover::before {
+
+    opacity: 1;
+}
+
+
+.gpt-card.active {
+
+    border:
+        1px solid
+        #00ff9d;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,255,170,.10),
+            rgba(0,100,255,.04)
+        );
+
+    box-shadow:
+        0 0 30px
+        rgba(0,255,170,.08);
+}
+
+
+.gpt-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    font-size: 23px;
+
+    margin-bottom: 14px;
+}
+
+
+.gpt-name {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 6px;
+}
+
+
+.gpt-description {
+
+    color: #7f8984;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   SELECTED GPT
+========================================= */
+
+.selected {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 15px 17px;
+
+    margin-bottom: 22px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(0,255,170,.035);
+
+    border:
+        1px solid
+        rgba(0,255,170,.12);
+}
+
+
+.selected-icon {
+
+    font-size: 27px;
+}
+
+
+.selected-name {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+
+.selected-description {
+
+    font-size: 11px;
+
+    color: #7e8983;
+}
+
+
+/* =========================================
+   QUESTION BOX
+========================================= */
+
+.question-box {
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    padding: 17px;
+
+    transition: .3s;
+}
+
+
+.question-box:focus-within {
+
+    border-color:
+        rgba(0,255,170,.45);
+
+    box-shadow:
+        0 0 35px
+        rgba(0,255,170,.06);
+}
+
+
+textarea {
+
+    width: 100%;
+
+    min-height: 145px;
+
+    border: none;
+
+    outline: none;
+
+    resize: vertical;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+textarea::placeholder {
+
+    color: #5d6862;
+}
+
+
+.input-bottom {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-top: 10px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+
+.hint {
+
+    color: #68736d;
+
+    font-size: 11px;
+}
+
+
+.counter {
+
+    color: #68736d;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+
+.ask-button {
+
+    flex: 1;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    cursor: pointer;
+
+    color: #00140c;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    background:
+        linear-gradient(
+            100deg,
+            #00ff9d,
+            #00d9ff
+        );
+
+    box-shadow:
+        0 8px 30px
+        rgba(0,255,170,.13);
+
+    transition: .25s;
+}
+
+
+.ask-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 40px
+        rgba(0,255,170,.22);
+}
+
+
+.ask-button:disabled {
+
+    opacity: .5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+.clear-button {
+
+    width: 110px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.03);
+
+    color: #aab3ae;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.clear-button:hover {
+
+    background:
+        rgba(255,255,255,.07);
+
+    color: white;
+}
+
+
+/* =========================================
+   ANSWER
+========================================= */
+
+.answer-section {
+
+    margin-top: 30px;
+}
+
+
+.answer-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+
+.answer-title {
+
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+
+.copy-button {
+
+    display: none;
+
+    padding: 7px 12px;
+
+    border-radius: 8px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    background:
+        rgba(255,255,255,.03);
+
+    color: #aab3ae;
+
+    cursor: pointer;
+}
+
+
+.copy-button:hover {
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+
+.answer {
+
+    min-height: 190px;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 16px;
+
+    background:
+        rgba(0,0,0,.18);
+
+    color: #dce3df;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: break-word;
+
+    line-height: 1.75;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   LOADER
+========================================= */
+
+.loading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #7d8983;
+}
+
+
+.loader {
+
+    width: 18px;
+
+    height: 18px;
+
+    border:
+        3px solid
+        rgba(255,255,255,.1);
+
+    border-top-color:
+        #00ff9d;
+
+    border-radius: 50%;
+
+    animation:
+        spin .7s linear infinite;
+}
+
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 17px 30px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+    color: #58625d;
+
+    font-size: 10px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width: 950px) {
+
+    .gpt-grid {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+
+@media(max-width: 650px) {
+
+    body {
+
+        padding: 10px;
+    }
+
+
+    .header {
+
+        padding: 20px;
+    }
+
+
+    .status {
+
+        display: none;
+    }
+
+
+    .content {
+
+        padding: 20px;
+    }
+
+
+    .gpt-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .footer {
+
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+}
+
+
+@media(max-width: 420px) {
+
+    .gpt-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .actions {
+
+        flex-direction: column;
+    }
+
+
+    .clear-button {
+
+        width: 100%;
+
+        padding: 13px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            🤖
+        </div>
+
+        <div>
+
+            <h1>
+                Specialized GPT Hub
+            </h1>
+
+            <p>
+                Your personal collection of AI experts
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="status">
+
+        <span class="status-dot"></span>
+
+        AI ONLINE
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="content">
+
+
+<div class="section-title">
+
+    <h2>
+        Choose your AI Expert
+    </h2>
+
+    <p>
+        Select a specialized GPT for your question
+    </p>
+
+</div>
+
+
+
+<!-- GPT CARDS -->
+
+<div class="gpt-grid">
+
+
+<button
+    class="gpt-card active"
+    onclick="selectGPT('agriculture', this)"
+>
+
+    <div class="gpt-icon">
+        🌾
+    </div>
+
+    <div class="gpt-name">
+        Agriculture
+    </div>
+
+    <div class="gpt-description">
+        Farming, crops, soil and agriculture
+    </div>
+
+</button>
+
+
+
+<button
+    class="gpt-card"
+    onclick="selectGPT('constitution', this)"
+>
+
+    <div class="gpt-icon">
+        ⚖️
+    </div>
+
+    <div class="gpt-name">
+        Constitution
+    </div>
+
+    <div class="gpt-description">
+        Indian Constitution and constitutional studies
+    </div>
+
+</button>
+
+
+
+<button
+    class="gpt-card"
+    onclick="selectGPT('fitness', this)"
+>
+
+    <div class="gpt-icon">
+        💪
+    </div>
+
+    <div class="gpt-name">
+        Fitness
+    </div>
+
+    <div class="gpt-description">
+        Exercise and healthy lifestyle
+    </div>
+
+</button>
+
+
+
+<button
+    class="gpt-card"
+    onclick="selectGPT('cybersecurity', this)"
+>
+
+    <div class="gpt-icon">
+        🔐
+    </div>
+
+    <div class="gpt-name">
+        Cybersecurity
+    </div>
+
+    <div class="gpt-description">
+        Defensive cybersecurity learning
+    </div>
+
+</button>
+
+
+
+<button
+    class="gpt-card"
+    onclick="selectGPT('linux', this)"
+>
+
+    <div class="gpt-icon">
+        🐧
+    </div>
+
+    <div class="gpt-name">
+        Linux
+    </div>
+
+    <div class="gpt-description">
+        Linux commands and administration
+    </div>
+
+</button>
+
+
+</div>
+
+
+
+<!-- SELECTED GPT -->
+
+<div class="selected">
+
+    <div
+        class="selected-icon"
+        id="selectedIcon"
+    >
+        🌾
+    </div>
+
+
+    <div>
+
+        <div
+            class="selected-name"
+            id="selectedName"
+        >
+            Agriculture GPT
+        </div>
+
+
+        <div
+            class="selected-description"
+            id="selectedDescription"
+        >
+            Specialized Agriculture Expert
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- QUESTION -->
+
+<div class="section-title">
+
+    <h2>
+        Ask your question
+    </h2>
+
+</div>
+
+
+
+<div class="question-box">
+
+
+<textarea
+    id="question"
+    maxlength="5000"
+    placeholder="Ask your agriculture question..."
+></textarea>
+
+
+<div class="input-bottom">
+
+    <span class="hint">
+        Enter → Ask &nbsp; | &nbsp;
+        Shift + Enter → New line
+    </span>
+
+
+    <span
+        class="counter"
+        id="counter"
+    >
+        0 / 5000
+    </span>
+
+</div>
+
+</div>
+
+
+
+<!-- ACTIONS -->
+
+<div class="actions">
+
+
+<button
+    class="ask-button"
+    id="askButton"
+    onclick="askAI()"
+>
+
+    ✨ Ask AI
+
+</button>
+
+
+<button
+    class="clear-button"
+    onclick="clearAll()"
+>
+
+    Clear
+
+</button>
+
+
+</div>
+
+
+
+<!-- ANSWER -->
+
+<div class="answer-section">
+
+
+<div class="answer-header">
+
+    <div class="answer-title">
+        AI Answer
+    </div>
+
+
+    <button
+        class="copy-button"
+        id="copyButton"
+        onclick="copyAnswer()"
+    >
+
+        📋 Copy
+
+    </button>
+
+</div>
+
+
+<div
+    class="answer"
+    id="answer"
+>
+
+    Select an expert and ask your question.
+
+</div>
+
+
+</div>
+
+
+</main>
+
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <span>
+        Specialized GPT Hub
+    </span>
+
+    <span>
+        Powered by Groq • GPT-OSS-120B
+    </span>
+
+</footer>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================
+   CURRENT GPT
+========================================= */
+
+let selectedGPT = "agriculture";
+
+
+
+/* =========================================
+   GPT DATA
+========================================= */
+
+const gptInfo = {
+
+    agriculture: {
+
+        name: "Agriculture GPT",
+
+        icon: "🌾",
+
+        description:
+            "Specialized Agriculture Expert",
+
+        placeholder:
+            "Ask your agriculture question..."
+
+    },
+
+
+    constitution: {
+
+        name: "Constitution GPT",
+
+        icon: "⚖️",
+
+        description:
+            "Indian Constitution Expert",
+
+        placeholder:
+            "Ask about the Indian Constitution..."
+
+    },
+
+
+    fitness: {
+
+        name: "Fitness GPT",
+
+        icon: "💪",
+
+        description:
+            "Fitness & Healthy Lifestyle Expert",
+
+        placeholder:
+            "Ask your fitness question..."
+
+    },
+
+
+    cybersecurity: {
+
+        name: "Cybersecurity GPT",
+
+        icon: "🔐",
+
+        description:
+            "Cybersecurity Expert",
+
+        placeholder:
+            "Ask your cybersecurity question..."
+
+    },
+
+
+    linux: {
+
+        name: "Linux GPT",
+
+        icon: "🐧",
+
+        description:
+            "Linux & Command-Line Expert",
+
+        placeholder:
+            "Ask your Linux question..."
+
+    }
+
+};
+
+
+
+/* =========================================
+   SELECT GPT
+========================================= */
+
+function selectGPT(gpt, button) {
+
+
+    selectedGPT = gpt;
+
+
+    document
+        .querySelectorAll(".gpt-card")
+        .forEach(function(card) {
+
+            card.classList.remove("active");
+
+        });
+
+
+    button.classList.add("active");
+
+
+    const info =
+        gptInfo[gpt];
+
+
+    document
+        .getElementById("selectedIcon")
+        .innerText =
+            info.icon;
+
+
+    document
+        .getElementById("selectedName")
+        .innerText =
+            info.name;
+
+
+    document
+        .getElementById("selectedDescription")
+        .innerText =
+            info.description;
+
+
+    document
+        .getElementById("question")
+        .placeholder =
+            info.placeholder;
+
+
+    document
+        .getElementById("answer")
+        .innerText =
+            "Ask a question to " + info.name + ".";
+
+
+    document
+        .getElementById("copyButton")
+        .style.display =
+            "none";
+
+}
+
+
+
+/* =========================================
+   ASK AI
+========================================= */
+
+async function askAI() {
+
+
+    const questionBox =
+        document.getElementById("question");
+
+
+    const answerBox =
+        document.getElementById("answer");
+
+
+    const button =
+        document.getElementById("askButton");
+
+
+    const copyButton =
+        document.getElementById("copyButton");
+
+
+    const question =
+        questionBox.value.trim();
+
+
+    if (!question) {
+
+        answerBox.innerText =
+            "Please enter a question.";
+
+        questionBox.focus();
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "⏳ Thinking...";
+
+
+    copyButton.style.display =
+        "none";
+
+
+    answerBox.innerHTML = `
+
+        <div class="loading">
+
+            <div class="loader"></div>
+
+            <span>
+                ${gptInfo[selectedGPT].name}
+                is thinking...
+            </span>
+
+        </div>
+
+    `;
+
+
+    try {
+
+
+        const response =
+            await fetch("/ask", {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    gpt:
+                        selectedGPT,
+
+                    question:
+                        question
+
+                })
+
+            });
+
+
+        const data =
+            await response.json();
+
+
+        answerBox.innerText =
+            data.answer;
+
+
+        copyButton.style.display =
+            "block";
+
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(error);
+
+
+        answerBox.innerText =
+            "⚠️ Unable to connect to AI server.";
+
+    }
+
+
+    finally {
+
+
+        button.disabled = false;
+
+        button.innerText =
+            "✨ Ask AI";
+
+    }
+
+}
+
+
+
+/* =========================================
+   CLEAR
+========================================= */
+
+function clearAll() {
+
+
+    document
+        .getElementById("question")
+        .value = "";
+
+
+    document
+        .getElementById("answer")
+        .innerText =
+            "Select an expert and ask your question.";
+
+
+    document
+        .getElementById("copyButton")
+        .style.display =
+            "none";
+
+
+    updateCounter();
+
+
+    document
+        .getElementById("question")
+        .focus();
+
+}
+
+
+
+/* =========================================
+   COPY ANSWER
+========================================= */
+
+async function copyAnswer() {
+
+
+    const answer =
+        document
+        .getElementById("answer")
+        .innerText;
+
+
+    if (!answer) {
+
+        return;
+
+    }
+
+
+    try {
+
+
+        await navigator
+            .clipboard
+            .writeText(answer);
+
+
+        const button =
+            document
+            .getElementById("copyButton");
+
+
+        button.innerText =
+            "✓ Copied";
+
+
+        setTimeout(function() {
+
+            button.innerText =
+                "📋 Copy";
+
+        }, 1500);
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+
+/* =========================================
+   CHARACTER COUNTER
+========================================= */
+
+function updateCounter() {
+
+
+    const question =
+        document
+        .getElementById("question")
+        .value;
+
+
+    document
+        .getElementById("counter")
+        .innerText =
+            question.length + " / 5000";
+
+}
+
+
+document
+    .getElementById("question")
+    .addEventListener(
+        "input",
+        updateCounter
+    );
+
+
+
+/* =========================================
+   ENTER KEY
+========================================= */
+
+/*
+
+ENTER
+→ Ask question
+
+SHIFT + ENTER
+→ New line
+
+CTRL + ENTER
+→ Ask question
+
+*/
+
+document
+    .getElementById("question")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                askAI();
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
